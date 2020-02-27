@@ -1,3 +1,3 @@
-public class ItemReader {
+public class ItemReader implements DataReader {
   
 }

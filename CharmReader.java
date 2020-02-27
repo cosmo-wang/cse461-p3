@@ -1,3 +1,3 @@
-public class CharmReader {
+public class CharmReader implements DataReader {
   
 }

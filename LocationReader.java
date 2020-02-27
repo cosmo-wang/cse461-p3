@@ -1,3 +1,3 @@
-public class LocationReader {
-  
+public class LocationReader implements DataReader {
+
 }

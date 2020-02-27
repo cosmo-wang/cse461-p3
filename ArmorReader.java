@@ -1,3 +1,3 @@
-public class ArmorReader {
-  
+public class ArmorReader implements DataReader {
+
 }
