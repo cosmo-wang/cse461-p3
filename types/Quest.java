@@ -1,10 +1,10 @@
 package types;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import utils.Utils;
 
-public class Quest {
+public class Quest implements Data, Cloneable {
     private int id;
     private String name;
     private String category;
@@ -17,19 +17,25 @@ public class Quest {
     private Set<QuestReward> rewards;
 
     public Quest(String[] values) {
-        this.id = Integer.parseInt(values[0]);
+        this.id = Utils.parseInt(values[0]);
         this.name = values[1];
         this.category = values[2];
-        this.stars = Integer.parseInt(values[3]);
+        this.stars = Utils.parseInt(values[3]);
         this.type = values[4];
         this.location = values[5];
-        this.zenny = Integer.parseInt(values[6]);
+        this.zenny = Utils.parseInt(values[6]);
         this.rewards = new HashSet<>();
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public int getId() { return id; }
 
     public String getName() { return name; }
+
+    public Set<QuestReward> getRewards() { return Set.copyOf(rewards); }
 
     public void addMonster(String monster, int num) {
         this.monster = monster;
@@ -40,7 +46,7 @@ public class Quest {
         this.rewards.add(new QuestReward(reward, quantity, percentage));
     }
 
-    public class QuestReward {
+    public class QuestReward implements Cloneable {
         private String reward;
         private int quantity;
         private int percentage;
@@ -49,6 +55,10 @@ public class Quest {
             this.reward = reward;
             this.quantity = quantity;
             this.percentage = percentage;
+        }
+
+        public Object clone() throws CloneNotSupportedException {
+            return super.clone();
         }
     }
 }
