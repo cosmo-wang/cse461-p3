@@ -47,7 +47,7 @@ public class QuestIndex extends DataIndex {
     private void addMonster(String[] info) {
         int id = Utils.parseInt(info[0]);
         if (this.contains(id)) {
-            Quest quest = (Quest) super.idToData.get(super.nameToId.get(info[0]));
+            Quest quest = (Quest) super.idToData.get(id);
             quest.addMonster(info[1], Utils.parseInt(info[2]));
         }
     }
@@ -55,7 +55,7 @@ public class QuestIndex extends DataIndex {
     private void addRewards(String[] info) {
         int id = Utils.parseInt(info[0]);
         if (this.contains(id)) {
-            Quest quest = (Quest) super.idToData.get(super.nameToId.get(info[0]));
+            Quest quest = (Quest) super.idToData.get(id);
             quest.addRewards(info[2], Utils.parseInt(info[3]), Utils.parseInt(info[4]));
         }
     }

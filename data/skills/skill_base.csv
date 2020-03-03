@@ -1,142 +1,142 @@
-name_en,icon_color,secret
-Poison Resistance,Violet,
-Paralysis Resistance,Yellow,
-Sleep Resistance,Cyan,
-Stun Resistance,Gold,
-Muck Resistance,Gray,
-Blast Resistance,Orange,
-Bleeding Resistance,Beige,
-Iron Skin,Beige,
-Earplugs,White,
-Windproof,White,
-Tremor Resistance,Gray,
-Dungmaster,DarkBeige,
-Effluvial Expert,DarkBeige,
-Heat Guard,Beige,
-Attack Boost,Red,
-Defense Boost,Beige,
-Health Boost,Green,
-Recovery Up,Green,
-Recovery Speed,Green,
-Fire Resistance,Red,
-Water Resistance,Blue,
-Ice Resistance,White,
-Thunder Resistance,Gold,
-Dragon Resistance,DarkRed,
-Blight Resistance,DarkPurple,
-Fire Attack,Red,
-Water Attack,Blue,
-Ice Attack,White,
-Thunder Attack,Gold,
-Dragon Attack,DarkRed,
-Poison Attack,Violet,
-Paralysis Attack,Yellow,
-Sleep Attack,Cyan,
-Blast Attack,Orange,
-Normal Shots,White,
-Piercing Shots,Blue,
-Spread/Power Shots,DarkGreen,
-Free Elem/Ammo Up,Cyan,
-Critical Eye,DarkPurple,
-Critical Boost,DarkPurple,
-Weakness Exploit,DarkPurple,
-Focus,LightBeige,
-Power Prolonger,LightBeige,
-Handicraft,White,
-Critical Draw,DarkPurple,
-Partbreaker,Gray,
-Slugger,Gold,
-Stamina Thief,Cyan,
-Master Mounter,Blue,
-Airborne,Blue,
-Latent Power,Red,
-Agitator,Red,2
-Peak Performance,Red,
-Heroics,Red,
-Fortify,DarkRed,
-Resentment,DarkRed,
-Resuscitate,Cyan,
-Horn Maestro,White,
-Capacity Boost,Gray,
-Special Ammo Boost,Gray,
-Artillery,Gray,
-Heavy Artillery,Gray,
-Marathon Runner,Beige,
-Constitution,Beige,
-Leap of Faith,Cyan,
-Stamina Surge,Beige,
-Hunger Resistance,Beige,
-Evade Window,Cyan,
-Evade Extender,Cyan,
-Guard,Gray,
-Quick Sheath,LightBeige,
-Wide-Range,White,
-Item Prolonger,LightBeige,
-Free Meal,LightBeige,2
-Speed Eating,Beige,
-Speed Sharpening,Gold,
-Bombardier,Orange,2
-Mushroomancer,Violet,
-Master Fisher,Blue,
-Pro Transporter,LightBeige,
-Master Gatherer,Lime,
-Honey Hunter,Beige,
-Carving Pro,Gray,
-Divine Blessing,Blue,
-Palico Rally,LightBeige,
-Botanist,Lime,
-Geologist,LightBeige,
-Maximum Might,Red,2
-Slinger Capacity,Lime,
-Stealth,Gray,
-Flinch Free,Gray,
-Scoutfly Range Up,Lime,
-Speed Crawler,White,
-Jump Master,Blue,
-Survival Expert,White,
-Aquatic/Polar Mobility,Blue,
-Cliffhanger,Beige,
-Blindsider,Gold,
-Scholar,Lime,
-Entomologist,Green,
-Effluvia Resistance,DarkBeige,
-Scenthound,Beige,
-Forager's Luck,White,
-Detector,White,
-Tool Specialist,LightBeige,
-Affinity Sliding,Red,
-Intimidator,White,
-Hasten Recovery,,
-Super Recovery,,
-Poison Duration Up,,
-Adrenaline,,
-Stamina Cap Up,,
-Critical Element,,
-Mind's Eye/Ballistics,Red,
-Bludgeoner,,
-Non-elemental Boost,DarkBeige,
-Capture Master,,
-Guard Up,,
-Guts,,
-Master's Touch,,
-Nullify Wind Pressure,,
-Razor Sharp/Spare Shot,,
-Critical Status,,
-Great Luck,,
-Carving Master,,
-Good Luck,,
-Bow Charge Plus,Blue,
-Punishing Draw,,
-Protective Polish,DarkRed,
-BBQ Master,,
-Blast Functionality,Orange,
-Elderseal Boost,DarkRed,
-Para Functionality,Yellow,
-Poison Functionality,Violet,
-Sleep Functionality,Cyan,
-Elemental Airborne,,
-Free Meal Secret,,
-True Razor Sharp/Spare Shot,,
-Maximum Might Secret,,
-Bombardier Secret,,
-Offensive Guard,White,
+id,name_en
+1,Poison Resistance
+2,Paralysis Resistance
+3,Sleep Resistance
+4,Stun Resistance
+5,Muck Resistance
+6,Blast Resistance
+7,Bleeding Resistance
+8,Iron Skin
+9,Earplugs
+10,Windproof
+11,Tremor Resistance
+12,Dungmaster
+13,Effluvial Expert
+14,Heat Guard
+15,Attack Boost
+16,Defense Boost
+17,Health Boost
+18,Recovery Up
+19,Recovery Speed
+20,Fire Resistance
+21,Water Resistance
+22,Ice Resistance
+23,Thunder Resistance
+24,Dragon Resistance
+25,Blight Resistance
+26,Fire Attack
+27,Water Attack
+28,Ice Attack
+29,Thunder Attack
+30,Dragon Attack
+31,Poison Attack
+32,Paralysis Attack
+33,Sleep Attack
+34,Blast Attack
+35,Normal Shots
+36,Piercing Shots
+37,Spread/Power Shots
+38,Free Elem/Ammo Up
+39,Critical Eye
+40,Critical Boost
+41,Weakness Exploit
+42,Focus
+43,Power Prolonger
+44,Handicraft
+45,Critical Draw
+46,Partbreaker
+47,Slugger
+48,Stamina Thief
+49,Master Mounter
+50,Airborne
+51,Latent Power
+52,Agitator
+53,Peak Performance
+54,Heroics
+55,Fortify
+56,Resentment
+57,Resuscitate
+58,Horn Maestro
+59,Capacity Boost
+60,Special Ammo Boost
+61,Artillery
+62,Heavy Artillery
+63,Marathon Runner
+64,Constitution
+65,Leap of Faith
+66,Stamina Surge
+67,Hunger Resistance
+68,Evade Window
+69,Evade Extender
+70,Guard
+71,Quick Sheath
+72,Wide-Range
+73,Item Prolonger
+74,Free Meal
+75,Speed Eating
+76,Speed Sharpening
+77,Bombardier
+78,Mushroomancer
+79,Master Fisher
+80,Pro Transporter
+81,Master Gatherer
+82,Honey Hunter
+83,Carving Pro
+84,Divine Blessing
+85,Palico Rally
+86,Botanist
+87,Geologist
+88,Maximum Might
+89,Slinger Capacity
+90,Stealth
+91,Flinch Free
+92,Scoutfly Range Up
+93,Speed Crawler
+94,Jump Master
+95,Survival Expert
+96,Aquatic/Polar Mobility
+97,Cliffhanger
+98,Blindsider
+99,Scholar
+100,Entomologist
+101,Effluvia Resistance
+102,Scenthound
+103,Forager's Luck
+104,Detector
+105,Tool Specialist
+106,Affinity Sliding
+107,Intimidator
+108,Hasten Recovery
+109,Super Recovery
+110,Poison Duration Up
+111,Adrenaline
+112,Stamina Cap Up
+113,Critical Element
+114,Mind's Eye/Ballistics
+115,Bludgeoner
+116,Non-elemental Boost
+117,Capture Master
+118,Guard Up
+119,Guts
+120,Master's Touch
+121,Nullify Wind Pressure
+122,Razor Sharp/Spare Shot
+123,Critical Status
+124,Great Luck
+125,Carving Master
+126,Good Luck
+127,Bow Charge Plus
+128,Punishing Draw
+129,Protective Polish
+130,BBQ Master
+131,Blast Functionality
+132,Elderseal Boost
+133,Para Functionality
+134,Poison Functionality
+135,Sleep Functionality
+136,Elemental Airborne
+137,Free Meal Secret
+138,True Razor Sharp/Spare Shot
+139,Maximum Might Secret
+140,Bombardier Secret
+141,Offensive Guard
