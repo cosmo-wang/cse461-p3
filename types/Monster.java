@@ -1,11 +1,12 @@
 package types;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import utils.Utils;
 
-public class Monster implements Data {
+public class Monster implements Data, Cloneable {
     private int id;
     private String name;
     private String ecology;
@@ -23,6 +24,11 @@ public class Monster implements Data {
         this.ecology = values[2];
         this.size = values[3];
         this.traps = new HashMap<>();
+        this.breaks = new HashSet<>();
+        this.habitats = new HashSet<>();
+        this.hitzones = new HashSet<>();
+        this.rewards = new HashSet<>();
+        this.weaknesses = new HashSet<>();
         traps.put("Pitfall Trap", values[4] == "TRUE");
         traps.put("Shock Trap", values[5] == "TRUE");
         traps.put("Vine Trap", values[6] == "TRUE");
@@ -87,16 +93,21 @@ public class Monster implements Data {
 
     @Override
     public String getName() { return name; }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
     
     public class Break implements Cloneable {
         private String part;
-        private int flinch, wound, sever;
+        private Map<String, Integer> data;
 
         public Break (String part, int flinch, int wound, int sever) {
             this.part = part;
-            this.flinch = flinch;
-            this.wound = wound;
-            this.sever = sever;
+            this.data = new HashMap<String, Integer>();
+            data.put("flinch", flinch);
+            data.put("wound", wound);
+            data.put("sever", sever);
         }
 
         public Object clone() throws CloneNotSupportedException {
@@ -105,13 +116,14 @@ public class Monster implements Data {
     }
 
     public class Habitat implements Cloneable {
-        private String map, start, move, rest;
+        private Map<String, String> data;
 
         public Habitat(String map, String start, String move, String rest) {
-            this.map = map;
-            this.start = start;
-            this.move = move;
-            this.rest = rest;
+            this.data = new HashMap<String, String>();
+            data.put("map", map);
+            data.put("start", start);
+            data.put("move", move);
+            data.put("rest", rest);
         }
 
         public Object clone() throws CloneNotSupportedException {
@@ -121,20 +133,21 @@ public class Monster implements Data {
 
     public class Hitzone implements Cloneable {
         private String part;
-        private int cut, impact, shot, fire, water, thunder, ice, dragon, ko;
+        private Map<String, Integer> data;
 
         public Hitzone(String part, int cut, int impact, int shot, int fire,
                         int water, int thunder, int ice, int dragon, int ko) {
             this.part = part;
-            this.cut = cut;
-            this.impact = impact;
-            this.shot = shot;
-            this.fire = fire;
-            this.water = water;
-            this.thunder = thunder;
-            this.ice = ice;
-            this.dragon = dragon;
-            this.ko = ko;
+            this.data = new HashMap<String, Integer>();
+            data.put("cut", cut);
+            data.put("impact", impact);
+            data.put("shot", shot);
+            data.put("fire", fire);
+            data.put("water", water);
+            data.put("thunder", thunder);
+            data.put("ice", ice);
+            data.put("dragon", dragon);
+            data.put("ko", ko);
         }
 
         public Object clone() throws CloneNotSupportedException {
@@ -160,22 +173,23 @@ public class Monster implements Data {
 
     public class Weakness implements Cloneable {
         private String form, altDescription;
-        private int fire, water, thunder, ice, dragon, poison, sleep, paralysis, blast, stun;
+        private Map<String, Integer> data;
 
         public Weakness(String form, String altDescription, int fire, int water, int thunder,
                         int ice, int dragon, int poison, int sleep, int paralysis, int blast, int stun) {
             this.form = form;
             this.altDescription = altDescription;
-            this.fire = fire;
-            this.water = water;
-            this.thunder = thunder;
-            this.ice = ice;
-            this.dragon = dragon;
-            this.poison = poison;
-            this.sleep = sleep;
-            this.paralysis = paralysis;
-            this.blast = blast;
-            this.stun = stun;
+            this.data = new HashMap<String, Integer>();
+            data.put("fire", fire);
+            data.put("water", water);
+            data.put("thunder", thunder);
+            data.put("ice", ice);
+            data.put("dragon", dragon);
+            data.put("poison", poison);
+            data.put("sleep", sleep);
+            data.put("paralysis", paralysis);
+            data.put("blast", blast);
+            data.put("stun", stun);
         }
 
         public Object clone() throws CloneNotSupportedException {
