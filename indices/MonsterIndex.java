@@ -6,7 +6,7 @@ import types.Monster;
 
 public class MonsterIndex extends DataIndex {
 
-    protected MonsterIndex(String dirName) throws FileNotFoundException {
+    public MonsterIndex(String dirName) throws FileNotFoundException {
         super(dirName);
         super.readFile("base", this::addBase);
         super.readFile("breaks", this::addBreaks);
