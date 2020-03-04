@@ -27,6 +27,11 @@ public class Quest implements Data, Cloneable {
         this.rewards = new HashSet<>();
     }
 
+    @Override
+    public Data copy() throws CloneNotSupportedException {
+        return (Data) this.clone();
+    }
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

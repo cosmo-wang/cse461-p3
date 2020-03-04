@@ -1,8 +1,6 @@
 package indices;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 import types.Weapon;
 
@@ -13,23 +11,6 @@ public class WeaponIndex extends DataIndex {
         super.readFile("base", this::readBase);
         super.readFile("craft", this::readCraft);
         super.readFile("sharpness", this::readSharpness);
-    }
-
-    public List<Weapon> find(String query) {
-        try {
-            List<Weapon> res = new ArrayList<Weapon>();
-            for (String name: super.nameToId.keySet()) {
-                if (name.toLowerCase().contains(query.toLowerCase())) {
-                    Weapon w = (Weapon)super.idToData.get(super.nameToId.get(name));
-                    res.add((Weapon)w.clone());
-                }
-            }
-            return res;
-        } catch (CloneNotSupportedException e) {
-            System.err.println("Monster could not be cloned.");
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private void readBase(String[] info) {

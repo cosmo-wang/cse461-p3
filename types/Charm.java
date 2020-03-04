@@ -45,6 +45,11 @@ public class Charm implements Data, Cloneable {
     }
 
     @Override
+    public Data copy() throws CloneNotSupportedException {
+        return (Data) this.clone();
+    }
+
+    @Override
     public int getId() { return id; }
 
     @Override

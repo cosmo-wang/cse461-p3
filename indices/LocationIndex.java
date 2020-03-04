@@ -1,8 +1,6 @@
 package indices;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 import types.Location;
 import utils.Utils;
@@ -13,23 +11,6 @@ public class LocationIndex extends DataIndex {
         super.readFile("base", this::addBase);
         super.readFile("camps", this::addCamps);
         super.readFile("items", this::addLocationItems);
-    }
-
-    public List<Location> find(String query) {
-        try {
-            List<Location> res = new ArrayList<Location>();
-            for (String name: super.nameToId.keySet()) {
-                if (name.toLowerCase().contains(query.toLowerCase())) {
-                    Location l = (Location)super.idToData.get(super.nameToId.get(name));
-                    res.add((Location)l.clone());
-                }
-            }
-            return res;
-        } catch (CloneNotSupportedException e) {
-            System.err.println("Monster could not be cloned.");
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private void addBase(String[] info) {

@@ -1,8 +1,6 @@
 package indices;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 import types.Armor;
 
@@ -13,23 +11,6 @@ public class ArmorIndex extends DataIndex {
         super.readFile("base", this::readBase);
         super.readFile("craft", this::readCraft);
         super.readFile("skills", this::readSkills);
-    }
-
-    public List<Armor> find(String query) {
-        try {
-            List<Armor> res = new ArrayList<Armor>();
-            for (String name: super.nameToId.keySet()) {
-                if (name.toLowerCase().contains(query.toLowerCase())) {
-                    Armor a = (Armor)super.idToData.get(super.nameToId.get(name));
-                    res.add((Armor)a.clone());
-                }
-            }
-            return res;
-        } catch (CloneNotSupportedException e) {
-            System.err.println("Armor could not be cloned.");
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private void readBase(String[] info) {

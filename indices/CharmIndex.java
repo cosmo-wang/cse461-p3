@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import types.Charm;
 
@@ -28,23 +26,6 @@ public class CharmIndex extends DataIndex {
         } catch (IOException e) {
             System.err.println("faield to open/read file: charm_ext.json");
             e.printStackTrace();
-        }
-    }
-
-    public List<Charm> find(String query) {
-        try {
-            List<Charm> res = new ArrayList<Charm>();
-            for (String name: super.nameToId.keySet()) {
-                if (name.toLowerCase().contains(query.toLowerCase())) {
-                    Charm c = (Charm)super.idToData.get(super.nameToId.get(name));
-                    res.add((Charm)c.clone());
-                }
-            }
-            return res;
-        } catch (CloneNotSupportedException e) {
-            System.err.println("Monster could not be cloned.");
-            e.printStackTrace();
-            return null;
         }
     }
 

@@ -94,6 +94,11 @@ public class Monster implements Data, Cloneable {
     @Override
     public String getName() { return name; }
 
+    @Override
+    public Data copy() throws CloneNotSupportedException {
+        return (Data) this.clone();
+    }
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

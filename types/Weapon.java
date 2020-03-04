@@ -57,6 +57,11 @@ public class Weapon implements Data, Cloneable {
         this.sharpness = new Sharpness(info);
     }
 
+    @Override
+    public Data copy() throws CloneNotSupportedException {
+        return (Data) this.clone();
+    }
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

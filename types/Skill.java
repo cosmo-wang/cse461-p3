@@ -15,6 +15,11 @@ public class Skill implements Data, Cloneable {
         this.description = new HashMap<>();
     }
 
+    @Override
+    public Data copy() throws CloneNotSupportedException {
+        return (Data) this.clone();
+    }
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

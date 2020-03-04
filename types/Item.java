@@ -26,6 +26,11 @@ public class Item implements Data, Cloneable {
         this.iconName = values[9];
     }
 
+    @Override
+    public Data copy() throws CloneNotSupportedException {
+        return (Data) this.clone();
+    }
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

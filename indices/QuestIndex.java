@@ -1,8 +1,6 @@
 package indices;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 import types.Quest;
 import utils.Utils;
@@ -13,23 +11,6 @@ public class QuestIndex extends DataIndex {
         super.readFile("base", this::addBase);
         super.readFile("monster", this::addMonster);
         super.readFile("rewards", this::addRewards);
-    }
-
-    public List<Quest> find(String query) {
-        try {
-            List<Quest> res = new ArrayList<Quest>();
-            for (String name: super.nameToId.keySet()) {
-                if (name.toLowerCase().contains(query.toLowerCase())) {
-                    Quest q = (Quest)super.idToData.get(super.nameToId.get(name));
-                    res.add((Quest)q.clone());
-                }
-            }
-            return res;
-        } catch (CloneNotSupportedException e) {
-            System.err.println("Monster could not be cloned.");
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private void addBase(String[] info) {

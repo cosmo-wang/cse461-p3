@@ -38,6 +38,23 @@ public class DataIndex {
         }
     }
 
+    public List<Data> find(String query) {
+        try {
+            List<Data> res = new ArrayList<Data>();
+            for (String name: this.nameToId.keySet()) {
+                if (name.toLowerCase().contains(query.toLowerCase())) {
+                    Data data = this.idToData.get(this.nameToId.get(name));
+                    res.add((Data)data.copy());
+                }
+            }
+            return res;
+        } catch (CloneNotSupportedException e) {
+            System.err.println("Armor could not be cloned.");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     protected void readFile(String target, Consumer<String[]> f) throws FileNotFoundException {
         String filename = null;
         for (String file: this.files) {
