@@ -1,6 +1,8 @@
 package indices;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import types.Item;
 import utils.Utils;
@@ -23,25 +25,18 @@ public class ItemIndex extends DataIndex {
         super.readFile("combination", this::addComb);
     }
 
-    public boolean contains(String itemName) {
-        return this.find(itemName) != null;
-    }
-
-    public boolean contains(int itemId) {
-        return this.find(super.idToName.get(itemId)) != null;
-    }
-
-    /**
-     * Find an Item in the index table given its name.
-     * @param itemName name of the item to find
-     * @return a copy of the item, null if not found or failed to copy the item
-     */
-    public Item find(String itemName) {
+    public List<Item> find(String query) {
         try {
-            int id = super.nameToId.get(itemName);
-            return (Item) ((Item) super.idToData.get(id)).clone();
+            List<Item> res = new ArrayList<Item>();
+            for (String name: super.nameToId.keySet()) {
+                if (name.toLowerCase().contains(query.toLowerCase())) {
+                    Item i = (Item)super.idToData.get(super.nameToId.get(name));
+                    res.add((Item)i.clone());
+                }
+            }
+            return res;
         } catch (CloneNotSupportedException e) {
-            System.err.println("Item could not be cloned.");
+            System.err.println("Monster could not be cloned.");
             e.printStackTrace();
             return null;
         }

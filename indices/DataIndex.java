@@ -16,7 +16,7 @@ import utils.Utils;
 /**
  * This class represents a generic reader of a type of data. 
  */
-public abstract class DataIndex {
+public class DataIndex {
     protected String dirName;
     protected List<String> files; // names of files that contain information about this data
     protected HashMap<Integer, String> idToName; // a mapping from id of the data to its name
@@ -60,7 +60,11 @@ public abstract class DataIndex {
         }
     }
 
-    abstract boolean contains(String name);
+    public boolean contains(String name) {
+        return this.nameToId.containsKey(name);
+    }
 
-    abstract boolean contains(int id);
+    public boolean contains(int id) {
+        return this.idToData.containsKey(id);
+    }
 }

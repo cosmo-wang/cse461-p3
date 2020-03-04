@@ -1,6 +1,8 @@
 package indices;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import types.Weapon;
 
@@ -13,26 +15,21 @@ public class WeaponIndex extends DataIndex {
         super.readFile("sharpness", this::readSharpness);
     }
 
-    public Weapon find(String weaponName) {
+    public List<Weapon> find(String query) {
         try {
-            int id = super.nameToId.get(weaponName);
-            Weapon res = (Weapon) super.idToData.get(id);
-            return res == null ? null : (Weapon) res.clone();
+            List<Weapon> res = new ArrayList<Weapon>();
+            for (String name: super.nameToId.keySet()) {
+                if (name.toLowerCase().contains(query.toLowerCase())) {
+                    Weapon w = (Weapon)super.idToData.get(super.nameToId.get(name));
+                    res.add((Weapon)w.clone());
+                }
+            }
+            return res;
         } catch (CloneNotSupportedException e) {
-            System.err.println("Weapon could not be cloned.");
+            System.err.println("Monster could not be cloned.");
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    boolean contains(String weaponName) {
-        return this.find(weaponName) != null;
-    }
-
-    @Override
-    boolean contains(int weaponId) {
-        return this.find(super.idToName.get(weaponId)) != null;
     }
 
     private void readBase(String[] info) {
@@ -45,7 +42,7 @@ public class WeaponIndex extends DataIndex {
     private void readCraft(String[] info) {
         if (this.contains(info[0])) {
             Weapon weapon = (Weapon) super.idToData.get(super.nameToId.get(info[0]));
-            weapon.addCrafts(info);
+            weapon.addCraft(info);
         }
     }
 

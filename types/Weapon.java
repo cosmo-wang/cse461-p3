@@ -1,6 +1,7 @@
 package types;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class Weapon implements Data, Cloneable {
     private boolean elementHidden;
     private List<Element> elements;
     private String elderseal;
-    private List<Integer> slots;
+    private int[] slots;
     private List<Craft> crafts;
     private Sharpness sharpness;
 
@@ -39,15 +40,17 @@ public class Weapon implements Data, Cloneable {
         this.addElement(values[10], values[11]);
         this.addElement(values[12], values[13]);
         this.elderseal = values[14];
-        this.slots = new ArrayList<Integer>();
-        this.slots.add(Utils.parseInt(values[15]));
-        this.slots.add(Utils.parseInt(values[16]));
-        this.slots.add(Utils.parseInt(values[17]));
+        this.slots = new int[3];
+        for (int i = 0; i < 3; i++) {
+            slots[i] = Utils.parseInt(values[15 + i]);
+        }
         this.crafts = new ArrayList<Craft>();
     }
 
-    public void addCrafts(String[] info) {
-        this.crafts.add(new Craft(info));
+    public void addCraft(String[] info) {
+        String type = info[1];
+        String[] craftItems = Arrays.copyOfRange(info, 2, info.length);
+        this.crafts.add(new Craft(type, craftItems));
     }
 
     public void addSharpness(String[] info) {
@@ -83,43 +86,6 @@ public class Weapon implements Data, Cloneable {
 
         public Object clone() throws CloneNotSupportedException {
             return super.clone();
-        }
-    }
-
-    private class Craft implements Cloneable {
-        private String type;
-        private CraftItem[] craftItems;
-
-        public Craft(String[] values) {
-            this.type = values[1];
-            this.craftItems = new CraftItem[4];
-            for (int i = 0; i < craftItems.length; i++) {
-                String item = values[2 * i + 2];
-                String qty = values[(2 * i + 2) + 1];
-                if (item.isEmpty() || qty.isEmpty()) {
-                    craftItems[i] = null;
-                } else {
-                    craftItems[i] = new CraftItem(item, Utils.parseInt(qty));
-                }
-            }
-        }
-
-        public Object clone() throws CloneNotSupportedException {
-            return super.clone();
-        }
-        
-        private class CraftItem implements Cloneable {
-            private String item;
-            private int qty;
-
-            public CraftItem(String item, int qty) {
-                this.item = item;
-                this.qty = qty;
-            }
-
-            public Object clone() throws CloneNotSupportedException {
-                return super.clone();
-            }
         }
     }
 

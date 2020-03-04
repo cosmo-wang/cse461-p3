@@ -1,6 +1,8 @@
 package indices;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import types.Skill;
 import utils.Utils;
@@ -12,27 +14,18 @@ public class SkillIndex extends DataIndex {
         super.readFile("levels", this::addLevels);
     }
 
-    @Override
-    public boolean contains(String skillName) {
-        return this.find(skillName) != null;
-    }
-
-    @Override
-    public boolean contains(int skillId) {
-        return false;
-    }
-    
-    /**
-     * Find an Item in the index table given its name.
-     * @param itemName name of the item to find
-     * @return a copy of the item, null if not found or failed to copy the item
-     */
-    public Skill find(String skillName) {
+    public List<Skill> find(String query) {
         try {
-            int id = super.nameToId.get(skillName);
-            return (Skill) ((Skill) super.idToData.get(id)).clone();
+            List<Skill> res = new ArrayList<Skill>();
+            for (String name: super.nameToId.keySet()) {
+                if (name.toLowerCase().contains(query.toLowerCase())) {
+                    Skill s = (Skill)super.idToData.get(super.nameToId.get(name));
+                    res.add((Skill)s.clone());
+                }
+            }
+            return res;
         } catch (CloneNotSupportedException e) {
-            System.err.println("Item could not be cloned.");
+            System.err.println("Monster could not be cloned.");
             e.printStackTrace();
             return null;
         }

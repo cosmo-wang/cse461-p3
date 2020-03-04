@@ -1,6 +1,8 @@
 package indices;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import types.Monster;
 
@@ -16,26 +18,21 @@ public class MonsterIndex extends DataIndex {
         super.readFile("weaknesses", this::addWeaknesses);
     }
 
-    public Monster find(String monsterName) {
+    public List<Monster> find(String query) {
         try {
-            int id = super.nameToId.get(monsterName);
-            Monster res = (Monster) super.idToData.get(id);
-            return res == null ? null : (Monster) res.clone();
+            List<Monster> res = new ArrayList<Monster>();
+            for (String name: super.nameToId.keySet()) {
+                if (name.toLowerCase().contains(query.toLowerCase())) {
+                    Monster m = (Monster)super.idToData.get(super.nameToId.get(name));
+                    res.add((Monster)m.clone());
+                }
+            }
+            return res;
         } catch (CloneNotSupportedException e) {
             System.err.println("Monster could not be cloned.");
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public boolean contains(String monsterName) {
-        return this.find(monsterName) != null;
-    }
-
-    @Override
-    public boolean contains(int monsterId) {
-        return this.find(super.idToName.get(monsterId)) != null;
     }
 
     private void addBase(String[] info) {
