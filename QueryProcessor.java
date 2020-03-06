@@ -1,5 +1,8 @@
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import indices.*;
 import types.Data;
@@ -14,18 +17,23 @@ public class QueryProcessor {
     private SkillIndex si;
     private WeaponIndex wi;
 
-    public QueryProcessor() throws FileNotFoundException {
-        this.ai = new ArmorIndex("data/armors");
-        this.ci = new CharmIndex("data/charms");
-        this.ii = new ItemIndex("data/items");
-        this.li = new LocationIndex("data/locations");
-        this.mi = new MonsterIndex("data/monsters");
-        this.qi = new QuestIndex("data/quests");
-        this.si = new SkillIndex("data/skills");
-        this.wi = new WeaponIndex("data/weapons");
+    public QueryProcessor() {
+        try {
+            this.ai = new ArmorIndex("data/armors");
+            this.ci = new CharmIndex("data/charms");
+            this.ii = new ItemIndex("data/items");
+            this.li = new LocationIndex("data/locations");
+            this.mi = new MonsterIndex("data/monsters");
+            this.qi = new QuestIndex("data/quests");
+            this.si = new SkillIndex("data/skills");
+            this.wi = new WeaponIndex("data/weapons");
+        } catch (FileNotFoundException e) {
+            System.err.println("Failed to create QueryProcessor");
+            e.printStackTrace();
+        }
     }
 
-    public List<String> processQuery(String input) {
+    public String processQuery(String input) {
         String type = input.trim().split(" ")[0];
         String query = input.trim().split(" ")[1];
         List<Data> queryResult = null;
@@ -55,8 +63,21 @@ public class QueryProcessor {
                 queryResult = wi.find(query);
                 break;
             default:
-                break;
+                return null;
         }
-        return null;
+        String res = "";
+        for (Data resultEntry : queryResult) {
+            res += "<p>" + resultEntry.getName() + "</p>\n";
+            res += toHtml(resultEntry.assembleWithHeader());
+        }
+        return res;
+    }
+
+    private String toHtml(Map<String, String> data) {
+        String res = "<ul style=\"list-style-type:none\">\n";
+        for (String entry : data.keySet()) {
+            res += "<li>" + entry + ": " + data.get(entry) + "</li>\n";
+        }
+        return res + "</ul>\n";
     }
 }
