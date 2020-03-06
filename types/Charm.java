@@ -1,6 +1,7 @@
 package types;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import utils.Utils;
@@ -10,7 +11,7 @@ public class Charm implements Data, Cloneable {
     private String name;
     private String previous;
     private int rarity;
-    private Map<String, Integer> skills;
+    private Map<String, String> skills;
     private Craft craft;
 
     public Charm(String[] values) {
@@ -20,15 +21,30 @@ public class Charm implements Data, Cloneable {
         this.rarity = Utils.parseInt(values[3]);
     }
 
+    @Override
+    public Map<String, String> assembleWithHeader() {
+        Map<String, String> res = new LinkedHashMap<String, String>();
+        res.put("Previous", this.previous);
+        res.put("Rarity", Integer.toString(this.rarity));
+        int i = 0;
+        for (String skillName : this.skills.keySet()) {
+            i++;
+            res.put("Skill " + i, skillName);
+            res.put("Skill " + i + " Level", this.skills.get(skillName));
+        }
+        res.putAll(this.craft.assembleWithHeader());
+        return res;
+    }
+
     public void addSkillsAndCraft(String jsonInfo) {
-        this.skills = new HashMap<String, Integer>();
+        this.skills = new HashMap<String, String>();
         String[] otherInfo = jsonInfo.split(":", 2)[1].split("},");
         String[] skillsInfo = otherInfo[0].split(": ", 2)[1]
                     .replaceAll("\\{", "").replaceAll("\\}", "").split(",");
         for (int i = 0; i < skillsInfo.length; i++) {
             String[] skillInfo = skillsInfo[i].split(":");
             String skillName = skillInfo[0].replaceAll("^\"|\"$", "").trim().substring(1);
-            int skillLevel = Utils.parseInt(skillInfo[1].trim());
+            String skillLevel = skillInfo[1].trim();
             this.skills.put(skillName, skillLevel);
         }
         String[] craftsInfo = otherInfo[1].split(": ", 2)[1]

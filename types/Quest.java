@@ -1,6 +1,8 @@
 package types;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import utils.Utils;
 
@@ -25,6 +27,12 @@ public class Quest implements Data, Cloneable {
         this.location = values[5];
         this.zenny = Utils.parseInt(values[6]);
         this.rewards = new HashSet<>();
+    }
+
+    public Map<String, String> assembleWithHeader() {
+        Map<String, String> res = new LinkedHashMap<String, String>();
+        
+        return res;
     }
 
     @Override

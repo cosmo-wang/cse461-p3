@@ -1,6 +1,7 @@
 package types;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import utils.Utils;
 
@@ -13,6 +14,12 @@ public class Skill implements Data, Cloneable {
         this.id = Utils.parseInt(values[0]);
         this.name = values[1];
         this.description = new HashMap<>();
+    }
+
+    public Map<String, String> assembleWithHeader() {
+        Map<String, String> res = new LinkedHashMap<String, String>();
+        
+        return res;
     }
 
     @Override

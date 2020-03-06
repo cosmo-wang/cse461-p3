@@ -2,6 +2,7 @@ package types;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import utils.Utils;
@@ -12,9 +13,9 @@ public class Armor implements Data, Cloneable {
     private int rarity;
     private String type;
     private int[] slots;
-    private Map<String, Integer> defenses;
+    private Map<String, String> defenses;
     private Craft craft;
-    private Map<String, Integer> skills;
+    private Map<String, String> skills;
 
     public Armor(String[] values) {
         this.id = Utils.parseInt(values[0]);
@@ -25,15 +26,35 @@ public class Armor implements Data, Cloneable {
         for (int i = 0; i < 3; i++) {
             slots[i] = Utils.parseInt(values[5 + i]);
         }
-        this.defenses = new HashMap<String, Integer>();
-        this.defenses.put("base", Utils.parseInt(values[8]));
-        this.defenses.put("max", Utils.parseInt(values[9]));
-        this.defenses.put("augment max", Utils.parseInt(values[10]));
-        this.defenses.put("fire", Utils.parseInt(values[11]));
-        this.defenses.put("water", Utils.parseInt(values[12]));
-        this.defenses.put("thunder", Utils.parseInt(values[13]));
-        this.defenses.put("ice", Utils.parseInt(values[14]));
-        this.defenses.put("dragon", Utils.parseInt(values[15]));
+        this.defenses = new LinkedHashMap<String, String>();
+        this.defenses.put("base", values[8]);
+        this.defenses.put("max", values[9]);
+        this.defenses.put("augment max", values[10]);
+        this.defenses.put("fire", values[11]);
+        this.defenses.put("water", values[12]);
+        this.defenses.put("thunder", values[13]);
+        this.defenses.put("ice", values[14]);
+        this.defenses.put("dragon", values[15]);
+    }
+
+    public Map<String, String> assembleWithHeader() {
+        Map<String, String> res = new LinkedHashMap<String, String>();
+        res.put("Rarity", Integer.toString(this.rarity));
+        res.put("Type", this.type);
+        for (int i = 0; i < this.slots.length; i++) {
+            res.put("Slot " + (i + 1), Integer.toString(this.slots[i]));
+        }
+        for (String defenseType: this.defenses.keySet()) {
+            res.put(Utils.capitalize(defenseType) + " Defense", this.defenses.get(defenseType));
+        }
+        res.putAll(this.craft.assembleWithHeader());
+        int i = 0;
+        for (String skillName : this.skills.keySet()) {
+            i++;
+            res.put("Skill " + i, skillName);
+            res.put("Skill " + i + " Level", this.skills.get(skillName));
+        }
+        return res;
     }
 
     public void addCraft(String[] info) {
@@ -43,12 +64,12 @@ public class Armor implements Data, Cloneable {
     }
 
     public void addSkills(String[] info) {
-        this.skills = new HashMap<String, Integer>();
+        this.skills = new HashMap<String, String>();
         if (!info[1].isEmpty() && !info[2].isEmpty()) {
-            skills.put(info[1], Utils.parseInt(info[2]));
+            skills.put(info[1], info[2]);
         }
         if (!info[3].isEmpty() && !info[3].isEmpty()) {
-            skills.put(info[3], Utils.parseInt(info[4]));
+            skills.put(info[3], info[4]);
         }
     }
 

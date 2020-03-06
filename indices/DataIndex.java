@@ -16,7 +16,7 @@ import utils.Utils;
 /**
  * This class represents a generic reader of a type of data. 
  */
-public class DataIndex {
+public abstract class DataIndex {
     protected String dirName;
     protected List<String> files; // names of files that contain information about this data
     protected HashMap<Integer, String> idToName; // a mapping from id of the data to its name
@@ -32,7 +32,7 @@ public class DataIndex {
         File[] files = new File(dirName).listFiles();
         for (File file : files) {
             String name = file.getName();
-            if (!file.isDirectory() && name.endsWith("csv")) {
+            if (!file.isDirectory() && (name.endsWith("csv") || name.endsWith("json"))) {
                 this.files.add(name);
             }
         }

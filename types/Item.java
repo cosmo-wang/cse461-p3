@@ -1,5 +1,8 @@
 package types;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import utils.Utils;
 
 public class Item implements Data, Cloneable {
@@ -11,7 +14,6 @@ public class Item implements Data, Cloneable {
     private int sellPrice;
     private int carryLimit;
     private int points;
-    private String iconName;
     private Combination comb;
 
     public Item(String[] values) {
@@ -23,7 +25,19 @@ public class Item implements Data, Cloneable {
         this.sellPrice = Utils.parseInt(values[6]);
         this.carryLimit = Utils.parseInt(values[7]);
         this.points = Utils.parseInt(values[8]);
-        this.iconName = values[9];
+    }
+
+    @Override
+    public Map<String, String> assembleWithHeader() {
+        Map<String, String> res = new LinkedHashMap<String, String>();
+        res.put("Category", this.category);
+        res.put("Rarity", Integer.toString(this.rarity));
+        res.put("Buy Price", Integer.toString(this.buyPrice));
+        res.put("Sell Price", Integer.toString(this.sellPrice));
+        res.put("Carry Limit", Integer.toString(this.carryLimit));
+        res.put("Points", Integer.toString(this.points));
+        res.put("Combination", this.comb.toString() + this.name);
+        return res;
     }
 
     @Override
@@ -62,6 +76,12 @@ public class Item implements Data, Cloneable {
             this.item1 = info[2];
             this.item2 = (info[3]).isEmpty() ? null : info[3];
             this.quantity = Utils.parseInt(info[4]);
+        }
+
+        @Override
+        public String toString() {
+            return Utils.capitalize(item1 + " + " 
+                                    + item2 + " = " + quantity + " * ");
         }
 
         public Object clone() throws CloneNotSupportedException {  

@@ -1,22 +1,37 @@
 package types;
 
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.Map;
 import utils.Utils;
 
 public class Location implements Data, Cloneable {
     private int id;
     private String name;
-    private Set<Camp> camps;
-    private Set<LocationItem> locationItems;
+    private List<Camp> camps;
+    private List<LocationItem> locationItems;
 
     public Location(String[] values) {
         this.id = Utils.parseInt(values[0]);
         this.name = values[1];
-        this.camps = new HashSet<>();
-        this.locationItems = new HashSet<>();
+        this.camps = new ArrayList<>();
+        this.locationItems = new ArrayList<>();
+    }
+
+    @Override
+    public Map<String, String> assembleWithHeader() {
+        Map<String, String> res = new LinkedHashMap<String, String>();
+        int i = 0;
+        for (Camp camp : this.camps) {
+            i++;
+            res.put("Camp " + i, camp.toString());
+        }
+        for (LocationItem lm: this.locationItems) {
+            res.put(lm.getName(), lm.toString());
+        }
+        return res;
     }
 
     @Override
@@ -38,6 +53,12 @@ public class Location implements Data, Cloneable {
     }
 
     public void addLocationItem(String locationItemName, int area, int percentage) {
+        for (LocationItem item : this.locationItems) {
+            if (item.getName().equals(locationItemName)) {
+                item.addAreaAndPercentageEntry(area, percentage);
+                return;
+            }
+        }
         LocationItem locationItem = new LocationItem(locationItemName);
         locationItem.addAreaAndPercentageEntry(area, percentage);
         this.locationItems.add(locationItem);
@@ -52,6 +73,11 @@ public class Location implements Data, Cloneable {
             this.area = area;
         }
 
+        @Override
+        public String toString() {
+            return this.name + " (" + area + ")";
+        }
+
         public Object clone() throws CloneNotSupportedException {
             return super.clone();
         }
@@ -64,6 +90,17 @@ public class Location implements Data, Cloneable {
         public LocationItem(String name) {
             this.name = name;
             this.areaAndPercentage = new HashMap<Integer, Integer>();
+        }
+
+        public String getName() { return name; }
+
+        @Override
+        public String toString() {
+            String res = "";
+            for (Map.Entry<Integer, Integer> entry: this.areaAndPercentage.entrySet()){
+                res += "Area " + entry.getKey() + " @ " + entry.getValue() + "%, ";
+            }
+            return res.substring(0, res.length() - 2);
         }
 
         public Object clone() throws CloneNotSupportedException {

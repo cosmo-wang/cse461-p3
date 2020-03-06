@@ -1,9 +1,10 @@
 package types;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import utils.Utils;
 
 public class Monster implements Data, Cloneable {
@@ -12,11 +13,11 @@ public class Monster implements Data, Cloneable {
     private String ecology;
     private String size;
     private Map<String, Boolean> traps;
-    private Set<Break> breaks;
-    private Set<Habitat> habitats;
-    private Set<Hitzone> hitzones;
-    private Set<MonsterReward> rewards;
-    private Set<Weakness> weaknesses;
+    private List<Break> breaks;
+    private List<Habitat> habitats;
+    private List<Hitzone> hitzones;
+    private List<MonsterReward> rewards;
+    private List<Weakness> weaknesses;
 
     public Monster(String[] values) {
         this.id = Utils.parseInt(values[0]);
@@ -24,14 +25,45 @@ public class Monster implements Data, Cloneable {
         this.ecology = values[2];
         this.size = values[3];
         this.traps = new HashMap<>();
-        this.breaks = new HashSet<>();
-        this.habitats = new HashSet<>();
-        this.hitzones = new HashSet<>();
-        this.rewards = new HashSet<>();
-        this.weaknesses = new HashSet<>();
-        traps.put("Pitfall Trap", values[4] == "TRUE");
-        traps.put("Shock Trap", values[5] == "TRUE");
-        traps.put("Vine Trap", values[6] == "TRUE");
+        this.breaks = new ArrayList<>();
+        this.habitats = new ArrayList<>();
+        this.hitzones = new ArrayList<>();
+        this.rewards = new ArrayList<>();
+        this.weaknesses = new ArrayList<>();
+        traps.put("Pitfall Trap", values[4].equals("TRUE"));
+        traps.put("Shock Trap", values[5].equals("TRUE"));
+        traps.put("Vine Trap", values[6].equals("TRUE"));
+    }
+
+    public Map<String, String> assembleWithHeader() {
+        Map<String, String> res = new LinkedHashMap<String, String>();
+        res.put("Ecology", this.ecology);
+        res.put("Size", this.size);
+        for (Map.Entry<String, Boolean> trap: this.traps.entrySet()) {
+            res.put(trap.getKey() , trap.getValue() ? "TRUE" : "FALSE");
+        }
+        for (Break b: this.breaks) {
+            res.put(Utils.capitalize(b.getPart()) + " Break", b.toString());
+        }
+        String habitatsValue = "";
+        for (Habitat h: this.habitats) {
+            habitatsValue += h.getMap() + ", ";
+        }
+        if (!habitatsValue.isEmpty()) {
+            res.put("Habitats", habitatsValue.substring(0, habitatsValue.length() - 2));
+        }
+        for (Hitzone h: this.hitzones) {
+            res.put(Utils.capitalize(h.getPart() + " Hitzone"), h.toString());
+        }
+        for (Weakness w: this.weaknesses) {
+            if (w.getForm().equals("normal")) {
+                res.put(Utils.capitalize(w.getForm()) + " Weakness", w.toString());
+            } else {
+                res.put(Utils.capitalize(w.getForm()) + " Weakness (" 
+                                        + w.getAltDescription() + ")", w.toString());
+            }
+        }
+        return res;
     }
 
     public void addBreaks(String[] info) {
@@ -115,6 +147,22 @@ public class Monster implements Data, Cloneable {
             data.put("sever", sever);
         }
 
+        public String getPart() {
+            return part;
+        }
+
+        @Override
+        public String toString() {
+            String res = "";
+            for (Map.Entry<String, Integer> entry : data.entrySet()) {
+                if (entry.getValue() != -1) {
+                    res += Utils.capitalize(entry.getKey()) 
+                            + " (" + entry.getValue() + "), ";
+                }
+            }
+            return res.substring(0, res.length() - 2);
+        }
+
         public Object clone() throws CloneNotSupportedException {
             return super.clone();
         }
@@ -130,6 +178,8 @@ public class Monster implements Data, Cloneable {
             data.put("move", move);
             data.put("rest", rest);
         }
+
+        public String getMap() { return data.get("map"); }
 
         public Object clone() throws CloneNotSupportedException {
             return super.clone();
@@ -153,6 +203,20 @@ public class Monster implements Data, Cloneable {
             data.put("ice", ice);
             data.put("dragon", dragon);
             data.put("ko", ko);
+        }
+
+        public String getPart() { return part; }
+
+        @Override
+        public String toString() {
+            String res = "";
+            for (Map.Entry<String, Integer> entry : data.entrySet()) {
+                if (entry.getValue() != -1) {
+                    res += Utils.capitalize(entry.getKey()) 
+                            + " (" + entry.getValue() + "), ";
+                }
+            }
+            return res.substring(0, res.length() - 2);
         }
 
         public Object clone() throws CloneNotSupportedException {
@@ -195,6 +259,22 @@ public class Monster implements Data, Cloneable {
             data.put("paralysis", paralysis);
             data.put("blast", blast);
             data.put("stun", stun);
+        }
+
+        public String getForm() { return form; }
+
+        public String getAltDescription() { return altDescription; }
+
+        @Override
+        public String toString() {
+            String res = "";
+            for (Map.Entry<String, Integer> entry : data.entrySet()) {
+                if (entry.getValue() != -1) {
+                    res += Utils.capitalize(entry.getKey()) 
+                            + " (" + entry.getValue() + "), ";
+                }
+            }
+            return res.substring(0, res.length() - 2);
         }
 
         public Object clone() throws CloneNotSupportedException {

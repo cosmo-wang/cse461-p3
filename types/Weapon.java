@@ -3,6 +3,7 @@ package types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,12 @@ public class Weapon implements Data, Cloneable {
             slots[i] = Utils.parseInt(values[15 + i]);
         }
         this.crafts = new ArrayList<Craft>();
+    }
+
+    public Map<String, String> assembleWithHeader() {
+        Map<String, String> res = new LinkedHashMap<String, String>();
+        
+        return res;
     }
 
     public void addCraft(String[] info) {
