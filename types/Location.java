@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import utils.Utils;
 
-public class Location implements Data, Cloneable {
-    private int id;
-    private String name;
+public class Location extends Data implements Cloneable {
     private List<Camp> camps;
     private List<LocationItem> locationItems;
 

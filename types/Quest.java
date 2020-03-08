@@ -6,9 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import utils.Utils;
 
-public class Quest implements Data, Cloneable {
-    private int id;
-    private String name;
+public class Quest extends Data implements Cloneable {
     private String category;
     private int stars;
     private String type;
@@ -31,8 +29,45 @@ public class Quest implements Data, Cloneable {
 
     public Map<String, String> assembleWithHeader() {
         Map<String, String> res = new LinkedHashMap<String, String>();
-        
+        if (!this.category.isEmpty()) {
+            res.put("Category", this.category);
+        }
+        if (this.stars != -1) {
+            String stars = "";
+            for (int i = 0; i < this.stars; i++) {
+                stars += "&#9733;";
+            }
+            res.put("Stars", stars);
+        }
+        if (!this.type.isEmpty()) {
+            res.put("Type", this.type);
+        }
+        if (!this.location.isEmpty()) {
+            res.put("Location", this.location);
+        }
+        if (this.zenny != -1) {
+            res.put("Zenny", Integer.toString(this.zenny) + " z");
+        }
+        if (this.monster != null && !this.monster.isEmpty()) {
+            res.put("Monster", this.monster + " &#215; " + this.monsterNum);
+        }
+        String rewardsValue = "";
+        for (QuestReward qr: this.rewards) {
+            rewardsValue += qr.toString() + ", ";
+        }
+        res.put("Rewards", rewardsValue.substring(0, rewardsValue.length() - 2));
         return res;
+    }
+
+    @Override
+    public int compareTo(Data other) {
+        if (other instanceof Quest) {
+            if(this.stars > ((Quest)other).stars) return 1; 
+            if(this.stars < ((Quest)other).stars) return -1;
+            else                   return 0;
+        } else {
+            return super.compareTo(other);
+        }
     }
 
     @Override
@@ -63,6 +98,11 @@ public class Quest implements Data, Cloneable {
         private String reward;
         private int quantity;
         private int percentage;
+
+        @Override
+        public String toString() {
+            return this.reward + " (&#215; " + this.quantity + " @ " + this.percentage + "%)";
+        }
 
         public QuestReward(String reward, int quantity, int percentage) {
             this.reward = reward;

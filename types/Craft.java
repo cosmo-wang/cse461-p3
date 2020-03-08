@@ -3,6 +3,7 @@ package types;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Craft implements Cloneable {
     private String type;
@@ -20,16 +21,15 @@ public class Craft implements Cloneable {
         }
     }
 
-    public Map<String, String> assembleWithHeader() {
-        Map<String, String> res = new LinkedHashMap<String, String>();
-        res.put("Craft Type", this.type);
-        int i = 0;
-        for (String craftItem: this.craftItems.keySet()) {
-            i++;
-            res.put("Craft Item " + i, craftItem);
-            res.put("Item " + i + " Qty", this.craftItems.get(craftItem));
+    public String getType() { return type; }
+
+    @Override
+    public String toString() {
+        String res = "";
+        for (Entry<String, String> entry : craftItems.entrySet()) {
+            res += entry.getKey() + " (" + entry.getValue() + "), ";
         }
-        return res;
+        return res.substring(0, res.length() - 2);
     }
 
     public Object clone() throws CloneNotSupportedException {

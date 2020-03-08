@@ -7,9 +7,7 @@ import java.util.Map;
 
 import utils.Utils;
 
-public class Armor implements Data, Cloneable {
-    private int id;
-    private String name;
+public class Armor extends Data implements Cloneable {
     private int rarity;
     private String type;
     private int[] slots;
@@ -41,18 +39,18 @@ public class Armor implements Data, Cloneable {
         Map<String, String> res = new LinkedHashMap<String, String>();
         res.put("Rarity", Integer.toString(this.rarity));
         res.put("Type", this.type);
-        for (int i = 0; i < this.slots.length; i++) {
-            res.put("Slot " + (i + 1), Integer.toString(this.slots[i]));
-        }
+        String slotsStr = Arrays.toString(this.slots);
+        res.put("Slots", slotsStr.substring(1, slotsStr.length() - 1));
         for (String defenseType: this.defenses.keySet()) {
             res.put(Utils.capitalize(defenseType) + " Defense", this.defenses.get(defenseType));
         }
-        res.putAll(this.craft.assembleWithHeader());
+        if (this.craft != null) {
+            res.put("Craft (" + this.craft.getType() + ")", this.craft.toString());
+        }
         int i = 0;
         for (String skillName : this.skills.keySet()) {
             i++;
-            res.put("Skill " + i, skillName);
-            res.put("Skill " + i + " Level", this.skills.get(skillName));
+            res.put("Skill " + i, skillName + " (Lv " + this.skills.get(skillName) + ")");
         }
         return res;
     }

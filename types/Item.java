@@ -5,10 +5,7 @@ import java.util.Map;
 
 import utils.Utils;
 
-public class Item implements Data, Cloneable {
-    private int id;
-    private String name;
-    private String category;
+public class Item extends Data implements Cloneable {
     private int rarity;
     private int buyPrice;
     private int sellPrice;
@@ -19,7 +16,6 @@ public class Item implements Data, Cloneable {
     public Item(String[] values) {
         this.id = Utils.parseInt(values[0]);
         this.name = values[1];
-        this.category = values[2];
         this.rarity = Utils.parseInt(values[4]);
         this.buyPrice = Utils.parseInt(values[5]);
         this.sellPrice = Utils.parseInt(values[6]);
@@ -30,13 +26,24 @@ public class Item implements Data, Cloneable {
     @Override
     public Map<String, String> assembleWithHeader() {
         Map<String, String> res = new LinkedHashMap<String, String>();
-        res.put("Category", this.category);
-        res.put("Rarity", Integer.toString(this.rarity));
-        res.put("Buy Price", Integer.toString(this.buyPrice));
-        res.put("Sell Price", Integer.toString(this.sellPrice));
-        res.put("Carry Limit", Integer.toString(this.carryLimit));
-        res.put("Points", Integer.toString(this.points));
-        res.put("Combination", this.comb.toString() + this.name);
+        if (this.rarity != -1) {
+            res.put("Rarity", Integer.toString(this.rarity));
+        }
+        if (this.buyPrice != -1) {
+            res.put("Buy Price", Integer.toString(this.buyPrice) + " z");
+        }
+        if (this.sellPrice != -1) {
+            res.put("Sell Price", Integer.toString(this.sellPrice) + " z");
+        }
+        if (this.carryLimit != -1) {
+            res.put("Carry Limit", Integer.toString(this.carryLimit));
+        }
+        if (this.points != -1) {
+            res.put("Points", Integer.toString(this.points) + " pts");
+        }
+        if (this.comb != null) {
+            res.put("Combination", this.comb.toString() + " " + this.name);
+        }
         return res;
     }
 
@@ -81,7 +88,7 @@ public class Item implements Data, Cloneable {
         @Override
         public String toString() {
             return Utils.capitalize(item1 + " + " 
-                                    + item2 + " = " + quantity + " * ");
+                                    + item2 + " = " + quantity + " &#215;");
         }
 
         public Object clone() throws CloneNotSupportedException {  

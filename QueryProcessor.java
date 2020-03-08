@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,8 +35,16 @@ public class QueryProcessor {
     }
 
     public String processQuery(String input) {
-        String type = input.trim().split(" ")[0];
-        String query = input.trim().split(" ")[1];
+        String[] components = input.trim().split(" ");
+        String type = components[0];
+        String query = null;
+        if (components.length == 1) {
+            query = "";
+        } else if (components.length == 2) {
+            query = input.trim().split(" ")[1];
+        } else {
+            return null;
+        }
         List<Data> queryResult = null;
         switch (type) {
             case "armor":
@@ -65,6 +74,7 @@ public class QueryProcessor {
             default:
                 return null;
         }
+        Collections.sort(queryResult);
         String res = "";
         for (Data resultEntry : queryResult) {
             res += "<p>" + resultEntry.getName() + "</p>\n";

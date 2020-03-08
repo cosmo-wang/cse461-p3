@@ -3,6 +3,7 @@ package utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Utils {
     public static final String COMMA_DELIMITER = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
@@ -36,5 +37,5 @@ public class Utils {
             capitalizeWord += first.toUpperCase() + afterfirst + " ";  
         }  
         return capitalizeWord.trim();  
-    }  
+    }
 }

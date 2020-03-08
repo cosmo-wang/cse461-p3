@@ -6,9 +6,7 @@ import java.util.Map;
 
 import utils.Utils;
 
-public class Charm implements Data, Cloneable {
-    private int id;
-    private String name;
+public class Charm extends Data implements Cloneable {
     private String previous;
     private int rarity;
     private Map<String, String> skills;
@@ -24,15 +22,18 @@ public class Charm implements Data, Cloneable {
     @Override
     public Map<String, String> assembleWithHeader() {
         Map<String, String> res = new LinkedHashMap<String, String>();
-        res.put("Previous", this.previous);
+        if (!this.previous.isEmpty()) {
+            res.put("Previous", this.previous);
+        }
         res.put("Rarity", Integer.toString(this.rarity));
         int i = 0;
         for (String skillName : this.skills.keySet()) {
             i++;
-            res.put("Skill " + i, skillName);
-            res.put("Skill " + i + " Level", this.skills.get(skillName));
+            res.put("Skill " + i, skillName + " (Lv " + this.skills.get(skillName) + ")");
         }
-        res.putAll(this.craft.assembleWithHeader());
+        if (this.craft != null) {
+            res.put("Craft (" + craft.getType() + ")", craft.toString());
+        }
         return res;
     }
 

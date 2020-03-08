@@ -7,14 +7,12 @@ import java.util.List;
 import java.util.Map;
 import utils.Utils;
 
-public class Monster implements Data, Cloneable {
-    private int id;
-    private String name;
+public class Monster extends Data implements Cloneable {
     private String ecology;
     private String size;
     private Map<String, Boolean> traps;
     private List<Break> breaks;
-    private List<Habitat> habitats;
+    private List<String> habitats;
     private List<Hitzone> hitzones;
     private List<MonsterReward> rewards;
     private List<Weakness> weaknesses;
@@ -30,15 +28,26 @@ public class Monster implements Data, Cloneable {
         this.hitzones = new ArrayList<>();
         this.rewards = new ArrayList<>();
         this.weaknesses = new ArrayList<>();
-        traps.put("Pitfall Trap", values[4].equals("TRUE"));
-        traps.put("Shock Trap", values[5].equals("TRUE"));
-        traps.put("Vine Trap", values[6].equals("TRUE"));
+        if (!values[4].isEmpty()) {
+            traps.put("Pitfall Trap", values[4].equals("TRUE"));
+        }
+        
+        if (!values[5].isEmpty()) {
+            traps.put("Shock Trap", values[5].equals("TRUE"));
+        }
+        if (!values[6].isEmpty()) {
+            traps.put("Vine Trap", values[6].equals("TRUE"));
+        }
     }
 
     public Map<String, String> assembleWithHeader() {
         Map<String, String> res = new LinkedHashMap<String, String>();
-        res.put("Ecology", this.ecology);
-        res.put("Size", this.size);
+        if (!this.ecology.isEmpty()) {
+            res.put("Ecology", this.ecology);
+        }
+        if (!this.size.isEmpty()) {
+            res.put("Size", this.size);
+        } 
         for (Map.Entry<String, Boolean> trap: this.traps.entrySet()) {
             res.put(trap.getKey() , trap.getValue() ? "TRUE" : "FALSE");
         }
@@ -46,8 +55,8 @@ public class Monster implements Data, Cloneable {
             res.put(Utils.capitalize(b.getPart()) + " Break", b.toString());
         }
         String habitatsValue = "";
-        for (Habitat h: this.habitats) {
-            habitatsValue += h.getMap() + ", ";
+        for (String h: this.habitats) {
+            habitatsValue += h + ", ";
         }
         if (!habitatsValue.isEmpty()) {
             res.put("Habitats", habitatsValue.substring(0, habitatsValue.length() - 2));
@@ -68,6 +77,9 @@ public class Monster implements Data, Cloneable {
 
     public void addBreaks(String[] info) {
         String part = info[1];
+        if (info[3].isEmpty() && info[4].isEmpty() && info[5].isEmpty()) {
+            return;
+        }
         int flinch = Utils.parseInt(info[3]);
         int wound = Utils.parseInt(info[4]);
         int sever = Utils.parseInt(info[5]);
@@ -75,11 +87,7 @@ public class Monster implements Data, Cloneable {
     }
 
     public void addHabitats(String[] info) {
-        String map = info[1];
-        String start = info[2];
-        String move = info[3];
-        String rest = info[4];
-        this.habitats.add(new Habitat(map, start, move, rest));
+        this.habitats.add(info[1]);
     }
 
     public void addHitzones(String[] info) {

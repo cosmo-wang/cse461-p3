@@ -75,7 +75,17 @@ public class Server {
             if (urlQuery.length != 2) {
                 this.sendInvalidQueryResponse(t);
             }
-            String res = qp.processQuery(urlQuery[1]);
+            String res;
+            try {
+                res = qp.processQuery(urlQuery[1]);
+            } catch (Exception e) {
+                this.sendInvalidQueryResponse(t);
+                e.printStackTrace();
+                return;
+            }
+            if (res == null) {
+                this.sendInvalidQueryResponse(t);
+            }
             byte[] response = (HTML_HEAD
                                + "<div>\n"
                                + res

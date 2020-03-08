@@ -3,11 +3,11 @@ package types;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import utils.Utils;
 
-public class Skill implements Data, Cloneable {
-    private int id;
-    private String name;
+public class Skill extends Data implements Cloneable {
     private Map<Integer, String> description;
 
     public Skill(String[] values) {
@@ -18,7 +18,9 @@ public class Skill implements Data, Cloneable {
 
     public Map<String, String> assembleWithHeader() {
         Map<String, String> res = new LinkedHashMap<String, String>();
-        
+        for (Entry<Integer, String> entry : this.description.entrySet()) {
+            res.put("Level " + entry.getKey(), entry.getValue());
+        }
         return res;
     }
 

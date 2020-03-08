@@ -2,9 +2,19 @@ package types;
 
 import java.util.Map;
 
-public interface Data {
-    public int getId();
-    public String getName();
-    public Map<String, String> assembleWithHeader();
-    public Data copy() throws CloneNotSupportedException;
+public abstract class Data implements Comparable<Data> {
+    protected int id;
+    protected String name;
+
+    abstract public int getId();
+    abstract public String getName();
+    abstract public Map<String, String> assembleWithHeader();
+    abstract public Data copy() throws CloneNotSupportedException;
+
+    @Override
+    public int compareTo(Data other) {
+        if(this.id > other.id) return 1; 
+        if(this.id < other.id) return -1;
+        else                   return 0;
+    }
 }
