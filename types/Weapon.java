@@ -2,7 +2,6 @@ package types;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,11 +146,9 @@ public class Weapon extends Data implements Cloneable {
     }
 
     private class Sharpness implements Cloneable {
-        private boolean maxed;
         private Map<String, Integer> data;
 
         public Sharpness(String[] values) {
-            this.maxed = values[1].equals("TRUE");
             this.data = new LinkedHashMap<String, Integer>();
             this.data.put("red", Utils.parseInt(values[2]));
             this.data.put("orange", Utils.parseInt(values[3]));

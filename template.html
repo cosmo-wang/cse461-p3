@@ -30,7 +30,7 @@
 				background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
 			}
 			#title {
-				font-size: 30px;
+				font-size: 50px;
 				color: #ffffff;
 				padding: 5px;
 				font-weight: 600;
@@ -45,7 +45,7 @@
 				border-radius: 4px;
 				font-size: 18px;
 				background-color: white;
-				background-image: url('search_icon.png');
+				background-image: url('img/search_icon.png');
 				background-position: 10px 10px; 
 				background-size: 20px;
 				background-repeat: no-repeat;
@@ -103,6 +103,10 @@
 				padding-left: 10px;
 			}
 			@media only screen and (max-width: 600px) {
+                #title {
+                    font-size: 30px;
+                }
+
 				#backgroundImg2 {
 					display: block;
 				}
@@ -120,7 +124,7 @@
 		</style>
 	</head>
 	<body>
-		<img id="backgroundImg" src="bg.JPG" alt="background image" />
+		<img id="backgroundImg" src="img/bg.jpg" alt="background image" />
 		<div id="titleContainer">
 			<center id="title">Monster Hunter Index</center>
 		</div>
@@ -131,52 +135,9 @@
 			</form>
 		</div>
 		<div id="resultContainer">
-			<p>Potion</p>
-			<ul style="list-style-type:none; display:none">
-				<li>Rarity: 1</li>
-				<li>Buy Price: 66 z</li>
-				<li>Sell Price: 8 z</li>
-				<li>Carry Limit: 10</li>
-				<li>Combination: Herb + Null = 1 &#215; Potion</li>
-			</ul>
-			<p>Mega Potion</p>
-			<ul style="list-style-type:none; display:none">
-				<li>Rarity: 2</li>
-				<li>Sell Price: 16 z</li>
-				<li>Carry Limit: 10</li>
-				<li>Combination: Potion + Honey = 1 &#215; Mega Potion</li>
-			</ul>
-			<p>Max Potion</p>
-			<ul style="list-style-type:none; display:none">
-				<li>Rarity: 3</li>
-				<li>Sell Price: 210 z</li>
-				<li>Carry Limit: 2</li>
-				<li>Combination: First-aid Med + Honey = 1 &#215; Max Potion</li>
-			</ul>
-			<p>Ancient Potion</p>
-			<ul style="list-style-type:none; display:none">
-				<li>Rarity: 5</li>
-				<li>Sell Price: 345 z</li>
-				<li>Carry Limit: 1</li>
-				<li>Combination: Antidote Herb + Null = 1 &#215; Ancient Potion</li>
-			</ul>
-			<p>Antidote</p>
-			<ul style="list-style-type:none; display:none">
-				<li>Rarity: 1</li>
-				<li>Buy Price: 60 z</li>
-				<li>Sell Price: 6 z</li>
-				<li>Carry Limit: 10</li>
-				<li>Combination: Antidote + Blue Mushroom = 1 &#215; Antidote</li>
-			</ul>
-			<p>Herbal Medicine</p>
-			<ul style="list-style-type:none; display:none">
-				<li>Rarity: 2</li>
-				<li>Sell Price: 25 z</li>
-				<li>Carry Limit: 5</li>
-				<li>Combination: Bitterbug + Blue Mushroom = 1 &#215; Herbal Medicine</li>
-			</ul>
+			<!-- INSERT HERE -->
 		</div>
-		<img id="backgroundImg2" src="bg.JPG" alt="background image" />
+		<img id="backgroundImg2" src="img/bg.jpg" alt="background image" />
 		<script>
 			var keywords = document.querySelectorAll("#resultContainer p");
 			for (var i = 0; i < keywords.length; i++) {

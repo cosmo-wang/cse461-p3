@@ -12,7 +12,6 @@ public class MonsterIndex extends DataIndex {
         super.readFile("breaks", this::addBreaks);
         super.readFile("habitats", this::addHabitats);
         super.readFile("hitzones", this::addHitzones);
-        super.readFile("rewards", this::addRewards);
         super.readFile("weaknesses", this::addWeaknesses);
     }
 
@@ -41,13 +40,6 @@ public class MonsterIndex extends DataIndex {
         if (this.contains(info[0])) {
             Monster monster = (Monster) super.idToData.get(super.nameToId.get(info[0]));
             monster.addHitzones(info);
-        }
-    }
-
-    private void addRewards(String[] info) {
-        if (this.contains(info[0])) {
-            Monster monster = (Monster) super.idToData.get(super.nameToId.get(info[0]));
-            monster.addRewards(info);
         }
     }
 

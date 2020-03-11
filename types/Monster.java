@@ -14,7 +14,6 @@ public class Monster extends Data implements Cloneable {
     private List<Break> breaks;
     private List<String> habitats;
     private List<Hitzone> hitzones;
-    private List<MonsterReward> rewards;
     private List<Weakness> weaknesses;
 
     public Monster(String[] values) {
@@ -26,7 +25,6 @@ public class Monster extends Data implements Cloneable {
         this.breaks = new ArrayList<>();
         this.habitats = new ArrayList<>();
         this.hitzones = new ArrayList<>();
-        this.rewards = new ArrayList<>();
         this.weaknesses = new ArrayList<>();
         if (!values[4].isEmpty()) {
             traps.put("Pitfall Trap", values[4].equals("TRUE"));
@@ -102,14 +100,6 @@ public class Monster extends Data implements Cloneable {
         int dragon = Utils.parseInt(info[9]);
         int ko = Utils.parseInt(info[10]);
         this.hitzones.add(new Hitzone(part, cut, impact, shot, fire, water, thunder, ice, dragon, ko));
-    }
-
-    public void addRewards(String[] info) {
-        String condition = info[1];
-        String item = info[3];
-        int quantity = Utils.parseInt(info[4]);
-        int percentage = Utils.parseInt(info[5]);
-        this.rewards.add(new MonsterReward(condition, item, quantity, percentage));
     }
 
     public void addWeaknesses(String[] info) {
@@ -225,22 +215,6 @@ public class Monster extends Data implements Cloneable {
                 }
             }
             return res.substring(0, res.length() - 2);
-        }
-
-        public Object clone() throws CloneNotSupportedException {
-            return super.clone();
-        }
-    }
-
-    public class MonsterReward implements Cloneable {
-        private String item, condition;
-        private int quantity, percentage;
-
-        public MonsterReward(String item, String condition, int quantity, int percentage) {
-            this.item = item;
-            this.condition = condition;
-            this.quantity = quantity;
-            this.percentage = percentage;
         }
 
         public Object clone() throws CloneNotSupportedException {

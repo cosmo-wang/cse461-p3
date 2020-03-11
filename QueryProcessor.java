@@ -1,9 +1,7 @@
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import indices.*;
 import types.Data;
@@ -84,7 +82,7 @@ public class QueryProcessor {
     }
 
     private String toHtml(Map<String, String> data) {
-        String res = "<ul style=\"list-style-type:none\">\n";
+        String res = "<ul style=\"list-style-type:none; display:none\">\n";
         for (String entry : data.keySet()) {
             res += "<li>" + entry + ": " + data.get(entry) + "</li>\n";
         }
