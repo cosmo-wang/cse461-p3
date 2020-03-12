@@ -88,6 +88,9 @@
 				cursor: pointer;
 				color: #6b80ae;
 			}
+            .resultHeader {
+                font-size: 25px;
+            }
 			@-webkit-keyframes fadeIn {
 				from { opacity: 0; }
 				to { opacity: 1; }
@@ -129,8 +132,18 @@
 			<center id="title">Monster Hunter Index</center>
 		</div>
 		<div id="inputContainer">
-			<form action="/query" method="get">
-				<input id="inputBox" type="text" size=60 name="terms" />
+            <form action="/search" method="get">
+                <select id="types" name="type">
+                    <option value="armor">Armor</option>
+                    <option value="charm">Charm</option>
+                    <option value="item">Item</option>
+                    <option value="location">Location</option>
+                    <option value="monster">Monsters</option>
+                    <option value="quest">Quest</option>
+                    <option value="skill">Skill</option>
+                    <option value="weapon">Weapon</option>
+                </select>
+                <input id="inputBox" type="text" size=60 name="queries"/>
 				<input id="searchBtn" type="submit" value="SEARCH" />
 			</form>
 		</div>

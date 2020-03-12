@@ -19,14 +19,13 @@ public class Server {
     public static final QueryProcessor qp = new QueryProcessor();
     public static final String TEMPLATE = readFile("template.html");
     public static final String INSERTION_DELIMITER = "<!-- INSERT HERE -->";
-    public static final String HTML_END = "</body></html>";
 
     public static void main(String[] args) {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 2387), 0);
             server.createContext("/", new HomeHandler());
             server.createContext("/img", new ImageHandler());
-            server.createContext("/query", new QueryHandler());
+            server.createContext("/search", new SearchHandler());
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {
@@ -62,34 +61,39 @@ public class Server {
         }
     }
 
-    static class QueryHandler implements HttpHandler {
+    static class SearchHandler implements HttpHandler {
         public void handle(HttpExchange t) throws IOException {
             printRequest(t);
-            String[] urlQuery = URLDecoder.decode(t.getRequestURI().getQuery(), StandardCharsets.UTF_8).split("=");
-            if (urlQuery.length != 2) {
+            String[] urlValues = URLDecoder.decode(t.getRequestURI().getQuery(), StandardCharsets.UTF_8).split("&");
+            if (urlValues.length != 2) {
                 sendInvalidQueryResponse(t);
             }
-            String res;
-            try {
-                res = qp.processQuery(urlQuery[1]);
-                if (res == null) {
+            String type = urlValues[0].substring(urlValues[0].indexOf("=") + 1, urlValues[0].length());
+            String[] queries = urlValues[1].substring(urlValues[1].indexOf("=") + 1, urlValues[1].length()).split(",");
+            String res = "";
+            for (String query : queries) {
+                try {
+                    String curRes = qp.processQuery(type, query);
+                    if (curRes == null) {
+                        sendInvalidQueryResponse(t);
+                    }
+                    res += curRes;
+                } catch (Exception e) {
                     sendInvalidQueryResponse(t);
+                    e.printStackTrace();
+                    return;
                 }
-                byte[] response = insertResult(res, INSERTION_DELIMITER);
-                t.sendResponseHeaders(200, response.length);
-                OutputStream os = t.getResponseBody();
-                os.write(response);
-                os.close();
-            } catch (Exception e) {
-                sendInvalidQueryResponse(t);
-                e.printStackTrace();
-                return;
             }
+            byte[] response = insertResult(res, INSERTION_DELIMITER);
+            t.sendResponseHeaders(200, response.length);
+            OutputStream os = t.getResponseBody();
+            os.write(response);
+            os.close();
         }
     }
 
     private static void sendInvalidQueryResponse(HttpExchange t) throws IOException {
-        byte[] response = insertResult("<div>Invalid Query Format. Expected: &lt;type&gt; &lt;queryword&gt;</div>", INSERTION_DELIMITER);
+        byte[] response = insertResult("<div class=\"resultHeader\">Invalid Query Format. Seperate multiple queries by commas.", INSERTION_DELIMITER);
         t.sendResponseHeaders(400, response.length);
         OutputStream os = t.getResponseBody();
         os.write(response);

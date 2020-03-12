@@ -5,6 +5,7 @@ import java.util.Map;
 
 import indices.*;
 import types.Data;
+import utils.Utils;
 
 public class QueryProcessor {
     private ArmorIndex ai;
@@ -32,17 +33,7 @@ public class QueryProcessor {
         }
     }
 
-    public String processQuery(String input) {
-        String[] components = input.trim().split(" ");
-        String type = components[0];
-        String query = null;
-        if (components.length == 1) {
-            query = "";
-        } else if (components.length == 2) {
-            query = input.trim().split(" ")[1];
-        } else {
-            return null;
-        }
+    public String processQuery(String type, String query) {
         List<Data> queryResult = null;
         switch (type) {
             case "armor":
@@ -73,7 +64,12 @@ public class QueryProcessor {
                 return null;
         }
         Collections.sort(queryResult);
-        String res = "";
+        String res;
+        if (query.isEmpty()) {
+            res = "<div class=\"resultHeader\">Showing all " + Utils.capitalize(type) + "s: </div>\n";
+        } else {
+            res = "<div class=\"resultHeader\">Results for \"" + query + "\" of type " + Utils.capitalize(type) + ":</div>\n";
+        }
         for (Data resultEntry : queryResult) {
             res += "<p>" + resultEntry.getName() + "</p>\n";
             res += toHtml(resultEntry.assembleWithHeader());
