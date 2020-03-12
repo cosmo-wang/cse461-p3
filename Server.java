@@ -123,6 +123,7 @@ public class Server {
     }
 
     private static void printRequest(HttpExchange t) {
+        System.out.println("Client IP: " + t.getRemoteAddress().getAddress().toString());
         Headers headers = t.getRequestHeaders();
         for (String key: headers.keySet()) {
             System.out.println(key + ": " + headers.get(key));
