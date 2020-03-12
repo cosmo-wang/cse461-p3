@@ -73,7 +73,7 @@ public class Server {
             String res = "";
             for (String query : queries) {
                 try {
-                    String curRes = qp.processQuery(type, query);
+                    String curRes = qp.processQuery(type, query.trim());
                     if (curRes == null) {
                         sendInvalidQueryResponse(t);
                     }
