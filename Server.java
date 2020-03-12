@@ -3,8 +3,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,21 +17,41 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+import utils.Utils;
+
 public class Server {
     public static final QueryProcessor qp = new QueryProcessor();
     public static final String TEMPLATE = readFile("template.html");
     public static final String INSERTION_DELIMITER = "<!-- INSERT HERE -->";
 
     public static void main(String[] args) {
+        // if (args.length != 1) {
+        //     System.err.println("Usage: java Server <portnum>");
+        //     return;
+        // }
         try {
-            HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 2387), 0);
-            server.createContext("/", new HomeHandler());
-            server.createContext("/img", new ImageHandler());
-            server.createContext("/search", new SearchHandler());
-            server.setExecutor(null);
-            server.start();
-        } catch (IOException e) {
-            System.err.println("Failed to create server");
+            InetAddress ip = InetAddress.getLocalHost();
+            String hostname = ip.getHostName();
+            // int port = Utils.parseInt(args[0]);
+            int port = 2387;
+            if (port == -1) {
+                System.err.println("Invalid port number. Port number must be an integer.");
+                return;
+            }
+            try {
+                System.out.println("Starting server on " + hostname + ":" + port);
+                HttpServer server = HttpServer.create(new InetSocketAddress(hostname, port), 0);
+                server.createContext("/", new HomeHandler());
+                server.createContext("/img", new ImageHandler());
+                server.createContext("/search", new SearchHandler());
+                server.setExecutor(null);
+                server.start();
+            } catch (IOException e) {
+                System.err.println("Failed to create server");
+                e.printStackTrace();
+            }
+        } catch (UnknownHostException e) {
+            System.err.println("Failed to resolve current hostname.");
             e.printStackTrace();
         }
     }
@@ -93,7 +115,7 @@ public class Server {
     }
 
     private static void sendInvalidQueryResponse(HttpExchange t) throws IOException {
-        byte[] response = insertResult("<div class=\"resultHeader\">Invalid Query Format. Seperate multiple queries by commas.", INSERTION_DELIMITER);
+        byte[] response = insertResult("<div class=\"resultHeader\">Invalid Query Format. Seperate multiple queries by commas.</div>", INSERTION_DELIMITER);
         t.sendResponseHeaders(400, response.length);
         OutputStream os = t.getResponseBody();
         os.write(response);
