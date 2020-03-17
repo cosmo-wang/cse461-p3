@@ -69,15 +69,13 @@ public class Weapon extends Data implements Cloneable {
         if (this.defense != -1 && this.defense != 0) {
             res.put("Defence", Integer.toString(this.defense));
         }
-        if (this.elementHidden) {
-            res.put("Element Hidden", Boolean.toString(this.elementHidden));
-        }
         String elementsValue = "";
         for (Element e : this.elements) {
             elementsValue += e.toString() + ", ";
         }
         if (!elementsValue.isEmpty()) {
-            res.put("Element Attack", elementsValue.substring(0, elementsValue.length() - 2));
+            String key = this.elementHidden ? "Element Attack (Hidden)" : "Element Attack";
+            res.put(key, elementsValue.substring(0, elementsValue.length() - 2));
         }
         if (!this.elderseal.isEmpty()) {
             res.put("Elderseal", this.elderseal);

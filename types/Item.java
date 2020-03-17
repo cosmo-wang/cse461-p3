@@ -12,6 +12,8 @@ public class Item extends Data implements Cloneable {
     private int carryLimit;
     private int points;
     private Combination comb;
+    private String icon;
+    private String iconColor;
 
     public Item(String[] values) {
         this.id = Utils.parseInt(values[0]);
@@ -21,6 +23,8 @@ public class Item extends Data implements Cloneable {
         this.sellPrice = Utils.parseInt(values[6]);
         this.carryLimit = Utils.parseInt(values[7]);
         this.points = Utils.parseInt(values[8]);
+        this.icon = values[9];
+        this.iconColor = values[10].replaceAll("#", "").toUpperCase();
     }
 
     @Override
@@ -29,14 +33,14 @@ public class Item extends Data implements Cloneable {
         if (this.rarity != -1) {
             res.put("Rarity", Integer.toString(this.rarity));
         }
+        if (this.carryLimit != -1) {
+            res.put("Carry Limit", Integer.toString(this.carryLimit));
+        }
         if (this.buyPrice != -1) {
             res.put("Buy Price", Integer.toString(this.buyPrice) + " z");
         }
         if (this.sellPrice != -1) {
             res.put("Sell Price", Integer.toString(this.sellPrice) + " z");
-        }
-        if (this.carryLimit != -1) {
-            res.put("Carry Limit", Integer.toString(this.carryLimit));
         }
         if (this.points != -1) {
             res.put("Points", Integer.toString(this.points) + " pts");
@@ -73,6 +77,10 @@ public class Item extends Data implements Cloneable {
             return null;
         }
     }
+
+    public String getIcon() { return this.icon; }
+
+    public String getIconColor() { return this.iconColor; }
 
     public class Combination implements Cloneable {
         public String item1;

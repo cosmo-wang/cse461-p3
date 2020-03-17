@@ -25,10 +25,6 @@ public class Server {
     public static final String INSERTION_DELIMITER = "<!-- INSERT HERE -->";
 
     public static void main(String[] args) {
-        // if (args.length != 1) {
-        //     System.err.println("Usage: java Server <portnum>");
-        //     return;
-        // }
         try {
             InetAddress ip = InetAddress.getLocalHost();
             String hostname = ip.getHostName();
@@ -73,6 +69,14 @@ public class Server {
             String path = t.getRequestURI().getPath();
             try {
                 byte[] response = readImage(path.substring(1, path.length()));
+                Headers h = t.getResponseHeaders();
+                if (path.endsWith("jpg")) {
+                    h.add("Content-type","image/jpeg");
+                } else if (path.endsWith("png")) {
+                    h.add("Content-type","image/png");
+                } else if (path.endsWith("svg")) {
+                    h.add("Content-type","image/svg+xml");
+                }
                 t.sendResponseHeaders(200, response.length);
                 OutputStream os = t.getResponseBody();
                 os.write(response);
@@ -124,11 +128,11 @@ public class Server {
 
     private static void printRequest(HttpExchange t) {
         System.out.println("Client IP: " + t.getRemoteAddress().getAddress().toString());
-        Headers headers = t.getRequestHeaders();
-        for (String key: headers.keySet()) {
-            System.out.println(key + ": " + headers.get(key));
-        }
-        System.out.println();
+        // Headers headers = t.getRequestHeaders();
+        // for (String key: headers.keySet()) {
+        //     System.out.println(key + ": " + headers.get(key));
+        // }
+        // System.out.println();
     }
 
     private static String readFile(String filePath) {

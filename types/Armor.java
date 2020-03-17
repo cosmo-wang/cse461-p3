@@ -39,6 +39,11 @@ public class Armor extends Data implements Cloneable {
         Map<String, String> res = new LinkedHashMap<String, String>();
         res.put("Rarity", Integer.toString(this.rarity));
         res.put("Type", this.type);
+        int i = 0;
+        for (String skillName : this.skills.keySet()) {
+            i++;
+            res.put("Skill " + i, skillName + " (Lv " + this.skills.get(skillName) + ")");
+        }
         String slotsStr = Arrays.toString(this.slots);
         res.put("Slots", slotsStr.substring(1, slotsStr.length() - 1));
         for (String defenseType: this.defenses.keySet()) {
@@ -46,11 +51,6 @@ public class Armor extends Data implements Cloneable {
         }
         if (this.craft != null) {
             res.put("Craft (" + this.craft.getType() + ")", this.craft.toString());
-        }
-        int i = 0;
-        for (String skillName : this.skills.keySet()) {
-            i++;
-            res.put("Skill " + i, skillName + " (Lv " + this.skills.get(skillName) + ")");
         }
         return res;
     }

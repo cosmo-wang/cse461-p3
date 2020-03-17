@@ -55,6 +55,14 @@ public abstract class DataIndex {
         }
     }
 
+    public Data get(String name) throws CloneNotSupportedException {
+        Integer id = this.nameToId.get(name);
+        if (id == null) {
+            return null;
+        }
+        return this.idToData.get(id).copy();
+    }
+
     protected void readFile(String target, Consumer<String[]> f) throws FileNotFoundException {
         String filename = null;
         for (String file: this.files) {
