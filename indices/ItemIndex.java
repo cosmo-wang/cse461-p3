@@ -3,7 +3,6 @@ package indices;
 import java.io.FileNotFoundException;
 
 import types.Item;
-import utils.Utils;
 
 /**
  * This class is a index table that stores information about Items.

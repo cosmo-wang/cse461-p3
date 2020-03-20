@@ -29,8 +29,7 @@ public class Server {
         try {
             InetAddress ip = InetAddress.getLocalHost();
             String hostname = ip.getHostName();
-            // int port = Utils.parseInt(args[0]);
-            int port = 2387;
+            int port = Utils.parseInt(args[0]);
             if (port == -1) {
                 System.err.println("Invalid port number. Port number must be an integer.");
                 return;
