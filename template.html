@@ -35,11 +35,9 @@
 				padding: 5px;
 				font-weight: 600;
 			}
-
             #helpButton {
                 margin-bottom: 16px;
             }
-
             #helpBox {
                 display: none; /* Hidden by default */
                 position: fixed; /* Stay in place */
@@ -68,14 +66,12 @@
                 font-size: 28px;
                 font-weight: bold;
             }
-
             #closeButton:hover,
             #closeButton:focus {
                 color: #000;
                 text-decoration: none;
                 cursor: pointer;
             }
-
             #searchBarContainer {
                 display: flex;
                 justify-content: center;
@@ -83,7 +79,6 @@
                 margin: auto;
                 width: 60%;
             }
-
 			#inputContainer {
 				padding: 10px;
                 display: flex;
@@ -107,7 +102,6 @@
 				background-size: 20px;
 				background-repeat: no-repeat;
 				padding: 12px 20px 12px 40px;
-				transition: width 0.4s ease-in-out, margin-left 0.4s ease-in-out;
 			}
 			#inputBox:focus {
 				background-color: #f5f3f7;
@@ -177,19 +171,50 @@
                 #title {
                     font-size: 30px;
                 }
-
 				#backgroundImg2 {
 					display: block;
 				}
-				#inputBox {
-					width: 55%;
+				.largeButton {
+					font-size: 15px;
+					color: black;
+					border-color: #cccccc;
+					background-color: #cccccc;
 				}
-				#inputBox:focus {
-					margin-left: 0;
-					width: 75%;
+				#searchBarContainer {
+					margin: 2px;
+					width: 100%;
+					display: grid;
+					grid-auto-rows: auto;
+				}
+				#inputContainer {
+					display: grid;
+					grid-template-columns: 1fr 1fr 1fr;
+					grid-template-rows: 1fr 1fr;
+					margin-bottom: 0;
+					padding: 0;
+				}
+				#inputContainer .button {
+					grid-column-start: 1;
+					grid-column-end: 4;
+				}
+				#inputBox {
+					margin: 2px;
+					margin-left: 5px;
+					width: 95%;
+					grid-column-start: 2;
+					grid-column-end: 4;
 				}
 				#searchBtn {
 					font-size: 15px;
+				}
+				#dropdownbox {
+					background-color: white;
+				}
+				#helpButton {
+					margin: 0;
+				}
+				#helpContent {
+					width: 80%;
 				}
 			}
 		</style>
@@ -202,10 +227,15 @@
         <div id="helpBox">
             <!-- Modal content -->
             <div id="helpContent">
-              <span id="closeButton">&times;</span>
-              <p>First select the category you would like to search for.</p>
-              <p>Then type your search query in the search bar, sperate multiple queries by commas.</p>
-              <p>To see all results of a certain type, select that type and click SEARCH with empty search bar.</p>
+				<span id="closeButton">&times;</span>
+				<p>First select the category you would like to search for.</p>
+				<p>Then type your search query in the search bar, sperate multiple queries by commas.</p>
+				<p>To see all results of a certain type, select that type and click SEARCH with empty search bar.</p>
+				<p>
+					<b>Sample Query:</b></br>
+					[Armor] </br>
+					[Weapon]
+				</p>
             </div>
           </div>
 		<div id="searchBarContainer">
@@ -221,9 +251,9 @@
                     <option value="weapon">Weapon</option>
                 </select>
                 <input id="inputBox" type="text" size=60 name="queries"/>
-                <input class="button" type="submit" value="SEARCH" />
+				<input class="button largeButton" type="submit" value="SEARCH" />
             </form>
-            <button id="helpButton" class="button">Help</button>
+            <button id="helpButton" class="button largeButton">Help</button>
 		</div>
 		<div id="resultContainer">
 			<!-- INSERT HERE -->
