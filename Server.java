@@ -26,6 +26,10 @@ public class Server {
     public static final String INSERTION_DELIMITER = "<!-- INSERT HERE -->";
 
     public static void main(String[] args) {
+        if (args.length != 1) {
+            System.err.println("Usage: java Server <portnum>");
+            return;
+        }
         try {
             InetAddress ip = InetAddress.getLocalHost();
             String hostname = ip.getHostName();
