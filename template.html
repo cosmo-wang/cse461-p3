@@ -35,14 +35,71 @@
 				padding: 5px;
 				font-weight: 600;
 			}
+
+            #helpButton {
+                margin-bottom: 16px;
+            }
+
+            #helpBox {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                font-size: 14pt;
+            }
+            #helpContent {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 2px solid #888;
+                border-radius: 10px;
+                width: 40%;
+            }
+            #closeButton {
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            #closeButton:hover,
+            #closeButton:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            #searchBarContainer {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: auto;
+                width: 60%;
+            }
+
 			#inputContainer {
 				padding: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
 			}
+            #dropdownbox {
+                font-size: 20px;
+                font-family: sans-serif;
+            }
 			#inputBox {
-				width: 50%;
+                width: 90%;
 				box-sizing: border-box;
 				border: 2px solid #ccc;
 				border-radius: 4px;
+                margin: 10px;
 				font-size: 18px;
 				background-color: white;
 				background-image: url('img/search_icon.png');
@@ -50,24 +107,20 @@
 				background-size: 20px;
 				background-repeat: no-repeat;
 				padding: 12px 20px 12px 40px;
-				margin-left: 20%;
 				transition: width 0.4s ease-in-out, margin-left 0.4s ease-in-out;
 			}
 			#inputBox:focus {
-				margin-left: 2%;
-				width: 85%;
 				background-color: #f5f3f7;
 			}
-			#searchBtn {
+			.button {
 				background-color: #666666;
 				border-color: #666666;
 				border-radius: 5px;
 				color: white;
 				font-size: 20px;
-				margin-top: 10px;
 				padding: 8px;
 			}
-			#searchBtn:hover {
+			.button:hover {
 				cursor: pointer;
 				background-color: #e5e5e5;
 				border-color: #e5e5e5;
@@ -118,6 +171,7 @@
 				animation: fadeIn 1s;
 				text-indent: -10px;
 				padding-left: 10px;
+                margin-left: 40px;
 			}
 			@media only screen and (max-width: 600px) {
                 #title {
@@ -144,10 +198,19 @@
 		<img id="backgroundImg" src="img/bg.jpg" alt="background image" />
 		<div id="titleContainer">
 			<center id="title">Monster Hunter Index</center>
-		</div>
-		<div id="inputContainer">
-            <form action="/search" method="get">
-                <select id="types" name="type">
+        </div>
+        <div id="helpBox">
+            <!-- Modal content -->
+            <div id="helpContent">
+              <span id="closeButton">&times;</span>
+              <p>First select the category you would like to search for.</p>
+              <p>Then type your search query in the search bar, sperate multiple queries by commas.</p>
+              <p>To see all results of a certain type, select that type and click SEARCH with empty search bar.</p>
+            </div>
+          </div>
+		<div id="searchBarContainer">
+            <form id="inputContainer" action="/search" method="get">
+                <select id="dropdownbox" name="type">
                     <option value="armor">Armor</option>
                     <option value="charm">Charm</option>
                     <option value="item">Item</option>
@@ -158,14 +221,41 @@
                     <option value="weapon">Weapon</option>
                 </select>
                 <input id="inputBox" type="text" size=60 name="queries"/>
-				<input id="searchBtn" type="submit" value="SEARCH" />
-			</form>
+                <input class="button" type="submit" value="SEARCH" />
+            </form>
+            <button id="helpButton" class="button">Help</button>
 		</div>
 		<div id="resultContainer">
 			<!-- INSERT HERE -->
 		</div>
 		<img id="backgroundImg2" src="img/bg.jpg" alt="background image" />
 		<script>
+            // Get the modal
+            var helpBox = document.getElementById("helpBox");
+
+            // Get the button that opens the modal
+            var helpButton = document.getElementsByClassName("button")[1];
+
+            // Get the <span> element that closes the modal
+            var closeButton = document.getElementById("closeButton");
+
+            // When the user clicks on the button, open the modal 
+            helpButton.onclick = function() {
+                helpBox.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            closeButton.onclick = function() {
+                helpBox.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == helpBox) {
+                    helpBox.style.display = "none";
+                }
+            }
+
 			var keywords = document.querySelectorAll("#resultContainer p");
 			for (var i = 0; i < keywords.length; i++) {
 				keywords[i].addEventListener('click', function() {

@@ -52,7 +52,7 @@ public class Weapon extends Data implements Cloneable {
             res.put("Type", this.type);
         }
         if (!this.previous.isEmpty()) {
-            res.put("Previous", this.previous);
+            res.put("Previous", this.previous.replaceAll("\"", ""));
         }
         if (!this.category.isEmpty()) {
             res.put("Category", this.category);

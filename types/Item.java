@@ -95,8 +95,11 @@ public class Item extends Data implements Cloneable {
 
         @Override
         public String toString() {
-            return Utils.capitalize(item1 + " + " 
-                                    + item2 + " = " + quantity + " &#215;");
+            String res = this.item1;
+            if (item2 != null) {
+                res += " + " + item2;
+            }
+            return Utils.capitalize(res + " = " + quantity + " &#215;");
         }
 
         public Object clone() throws CloneNotSupportedException {  

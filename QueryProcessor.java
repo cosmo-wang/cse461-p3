@@ -200,7 +200,7 @@ public class QueryProcessor {
             }
             return res + "</ul>\n";
         } else if (type.equals("weapon")) {
-            res += "<p><img src=\"" + DIRPATH + "weapons/" + data.get("Type") + ".svg\" class=\"iconBig\"/>" + name + "</p>\n";
+            res += "<p><img src=\"" + DIRPATH + "weapons/" + data.get("Type") + ".svg\" class=\"iconBig\"/>" + name.replaceAll("\"", "") + "</p>\n";
             res += "<ul style=\"list-style-type:none; display:none\">\n";
             for (String entry : data.keySet()) {
                 if (entry.contains("Slots")) {

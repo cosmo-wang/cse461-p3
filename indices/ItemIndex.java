@@ -31,9 +31,9 @@ public class ItemIndex extends DataIndex {
     }
 
     private void addComb(String[] info) {
-        int id = Utils.parseInt(info[0]);
-        if (this.contains(id)) {
-            Item item = (Item) super.idToData.get(id);
+        String name = info[1];
+        if (this.contains(name)) {
+            Item item = (Item) super.idToData.get(super.nameToId.get(name));
             item.addCombInfo(info);
         }
     }

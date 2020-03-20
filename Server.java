@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import com.sun.net.httpserver.Headers;
@@ -54,7 +55,6 @@ public class Server {
 
     static class HomeHandler implements HttpHandler {
         public void handle(HttpExchange t) throws IOException {
-            printRequest(t);
             byte[] response = TEMPLATE.getBytes();
             t.sendResponseHeaders(200, response.length);
             OutputStream os = t.getResponseBody();
@@ -65,7 +65,6 @@ public class Server {
 
     static class ImageHandler implements HttpHandler {
         public void handle(HttpExchange t) throws IOException {
-            printRequest(t);
             String path = t.getRequestURI().getPath();
             try {
                 byte[] response = readImage(path.substring(1, path.length()));
@@ -89,13 +88,15 @@ public class Server {
 
     static class SearchHandler implements HttpHandler {
         public void handle(HttpExchange t) throws IOException {
-            printRequest(t);
+            String clientIp = t.getRemoteAddress().getAddress().toString();
             String[] urlValues = URLDecoder.decode(t.getRequestURI().getQuery(), StandardCharsets.UTF_8).split("&");
             if (urlValues.length != 2) {
                 sendInvalidQueryResponse(t);
             }
             String type = urlValues[0].substring(urlValues[0].indexOf("=") + 1, urlValues[0].length());
             String[] queries = urlValues[1].substring(urlValues[1].indexOf("=") + 1, urlValues[1].length()).split(",");
+            System.out.println("Client " + clientIp + " searched for "
+                                + Arrays.toString(queries).replace('[', '\"').replace(']', '\"') + " in " + type);
             String res = "";
             for (String query : queries) {
                 try {
@@ -124,15 +125,6 @@ public class Server {
         OutputStream os = t.getResponseBody();
         os.write(response);
         os.close();
-    }
-
-    private static void printRequest(HttpExchange t) {
-        System.out.println("Client IP: " + t.getRemoteAddress().getAddress().toString());
-        // Headers headers = t.getRequestHeaders();
-        // for (String key: headers.keySet()) {
-        //     System.out.println(key + ": " + headers.get(key));
-        // }
-        // System.out.println();
     }
 
     private static String readFile(String filePath) {
